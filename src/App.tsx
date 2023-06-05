@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
+import Jobs from './components/Jobs';
 
 function App() {
   return (
     <div className="App">
-      Hello JOb!!!
+      <Jobs />
     </div>
   );
 }
