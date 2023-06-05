@@ -3,7 +3,7 @@ import React from 'react';
 const InterviewTips = () => {
     return (
         <div>
-         Interview Tips   
+         <h1>Interview Tips</h1>  
         </div>
     );
 };
