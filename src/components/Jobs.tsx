@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { initializeJobs } from '../features/jobs/jobsSlice';
 import { RootState, AppDispatch } from '../app/store';
+import NavMenu from './NavMenu';
 
 
 const Jobs = () => {
