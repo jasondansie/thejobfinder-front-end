@@ -1,13 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import jobsService from '../../services/jobs';
+import { IJob } from "../../types";
 
 interface JobsState {
-  jobs: Job[];
+  jobs: IJob[];
   isLoading: boolean;
-}
-
-interface Job {
-  // Define your job properties here
 }
 
 export const initializeJobs = createAsyncThunk(
