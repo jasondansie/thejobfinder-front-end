@@ -17,7 +17,10 @@ const Layout: React.FC = () => {
                             <Navbar.Brand href="/home">TheJobFinder</Navbar.Brand>
                             <Nav className="me-auto">
                                 <LinkContainer to="/jobList">
-                                    <Nav.Link>List Jobs</Nav.Link>
+                                    <Nav.Link>Jobs</Nav.Link>
+                                </LinkContainer>
+                                <LinkContainer to="/addjob">
+                                    <Nav.Link>Add a Job</Nav.Link>
                                 </LinkContainer>
                                 <LinkContainer to="/resume">
                                     <Nav.Link>Resume</Nav.Link>

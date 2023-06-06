@@ -6,6 +6,8 @@ import Layout from './pages/Layout';
 import Jobs from './components/Jobs';
 import Resume from './components/Resume';
 import InterviewTips from './components/InterviewTips';
+import AddJob from './components/AddJob';
+import ViewJob from './components/ViewJob';
 
 function App() {
   return ( 
@@ -16,6 +18,8 @@ function App() {
             <Route path="/jobList" element={<Jobs />} />
             <Route path="/resume" element={<Resume />} />
             <Route path="/interviewTips" element={<InterviewTips />} />
+            <Route path="/addjob" element={<AddJob />} />
+            <Route path="/viewjob/:id" element={<ViewJob />} />
         </Route>
       </Routes>
     </BrowserRouter>
