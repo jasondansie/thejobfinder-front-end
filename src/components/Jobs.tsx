@@ -19,8 +19,6 @@ const Jobs: React.FC = () => {
     dispatch(initializeJobs());
   }, [dispatch]);
 
-  console.log('jobsList', jobsList);
-
   return (
     <div>
       <Container>
