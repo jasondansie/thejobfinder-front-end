@@ -7,6 +7,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 import CommonButton from './CommonButton';
 import { IJobShort } from '../types';
+import classes from './Jobs.module.css'
 
 const Jobs: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -21,7 +22,7 @@ const Jobs: React.FC = () => {
 
   return (
     <div>
-      <Container>
+      <Container className={classes.jobs}>
         <Row>
           <Col>
             <h1>Your Job List</h1>
@@ -47,7 +48,8 @@ const Jobs: React.FC = () => {
             company={job.company}
             Position={job.Position}
             jobDescription={job.jobDescription}
-            applied={job.applied}
+            dateApplied={job.dateApplied}
+            response={job.response}
             _id={job._id}
           />
         ))

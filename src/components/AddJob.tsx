@@ -4,7 +4,7 @@ import axios from 'axios';
 import { ISendJob } from '../types';
 
 const AddJob: React.FC = () => {
-    const baseurl = `https://the-job-finder-back-end.onrender.com/api/v1/jobs/`;
+    const baseurl = `https://the-job-finder-back-end.onrender.com/api/v1/jobs`;
 
     const [formData, setFormData] = useState<ISendJob>({
         company: '',

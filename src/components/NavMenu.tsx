@@ -10,8 +10,8 @@ const NavMenu = () => {
                 <Container>
                     <Navbar.Brand href="/home">TheJobFinder</Navbar.Brand>
                     <Nav className="me-auto">
-                        <Nav.Link href="/home">Home</Nav.Link>
                         <Nav.Link href="/jobList">List Jobs</Nav.Link>
+                        <Nav.Link href="/addjob">Add a Job</Nav.Link>
                         <Nav.Link href="/resume">Resume</Nav.Link>
                         <Nav.Link href="/interviewTips">Interview tips</Nav.Link>
                     </Nav>

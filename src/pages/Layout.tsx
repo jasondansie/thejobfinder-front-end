@@ -1,47 +1,22 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import { LinkContainer } from 'react-router-bootstrap';
 import { Outlet } from 'react-router-dom';
-
+import NavMenu from '../components/NavMenu';
 
 const Layout: React.FC = () => {
     return (
-        <Container fluid>
-            <Row>
-                <nav>
-                    <Navbar bg="dark" variant="dark">
-                        <Container>
-                            <Navbar.Brand href="/thejobfinder">TheJobFinder</Navbar.Brand>
-                            <Nav className="me-auto">
-                                <LinkContainer to="/home">
-                                    <Nav.Link>home</Nav.Link>
-                                </LinkContainer>
-                                <LinkContainer to="/jobList">
-                                    <Nav.Link>Jobs</Nav.Link>
-                                </LinkContainer>
-                                <LinkContainer to="/addjob">
-                                    <Nav.Link>Add a Job</Nav.Link>
-                                </LinkContainer>
-                                <LinkContainer to="/resume">
-                                    <Nav.Link>Resume</Nav.Link>
-                                </LinkContainer>
-                                <LinkContainer to="/interviewTips">
-                                    <Nav.Link>Interview tips</Nav.Link>
-                                </LinkContainer>
-                            </Nav>
-                        </Container>
-                    </Navbar>
-                    <br />
-                </nav>
+        <div>
+            <Row>   
+                <NavMenu />
             </Row>
-            <Row>
-                <Outlet />
-            </Row>
-        </Container>
+            <Container>       
+                
+                <Row>
+                    <Outlet />
+                </Row>              
+            </Container>
+        </div>       
     );
 };
-
 export default Layout;
