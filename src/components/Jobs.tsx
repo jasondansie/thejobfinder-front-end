@@ -7,7 +7,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 import CommonButton from './CommonButton';
 import { IJobShort } from '../types';
-import classes from './Jobs.module.css'
+import classes from './Jobs.module.css';
 
 const Jobs: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -24,16 +24,12 @@ const Jobs: React.FC = () => {
     <div>
       <Container className={classes.jobs}>
         <Row>
-          <Col>
+          <Col xs={6} md={8} className='pt-2'>
             <h1>Your Job List</h1>
           </Col>
-          <Col>
-          </Col>
-          <Col>
-          </Col>
-          <Col>
+          <Col xs={6} md={4} className="text-md-end">
             <CommonButton variant="primary" onClick={() => navigate("/addjob")}>
-              {"Add Job"}
+              Add Job
             </CommonButton>
           </Col>
         </Row>
