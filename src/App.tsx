@@ -14,14 +14,15 @@ function App() {
   return ( 
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
-            <Route path="/home" element={<Home />} />
-            <Route path="/jobList" element={<Jobs />} />
-            <Route path="/resume" element={<Resume />} />
-            <Route path="/interviewTips" element={<InterviewTips />} />
-            <Route path="/addjob" element={<AddJob />} />
-            <Route path="/viewjob/:id" element={<ViewJob />} />
-            <Route path="/personallinks" element={<PersonlLinks />} />
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/jobList" element={<Jobs />} />
+          <Route path="/resume" element={<Resume />} />
+          <Route path="/interviewTips" element={<InterviewTips />} />
+          <Route path="/addjob" element={<AddJob />} />
+          <Route path="/viewjob/:id" element={<ViewJob />} />
+          <Route path="/personallinks" element={<PersonlLinks />} />
         </Route>
       </Routes>
     </BrowserRouter>
