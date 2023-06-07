@@ -24,10 +24,10 @@ const Jobs: React.FC = () => {
     <div>
       <Container className={classes.jobs}>
         <Row>
-          <Col xs={6} md={8} className='pt-2'>
+          <Col xs={6} md={3} className='pt-2'>
             <h1>Your Job List</h1>
           </Col>
-          <Col xs={6} md={4} className="text-md-end">
+          <Col xs={6} md={2} className="text-md-end">
             <CommonButton variant="primary" onClick={() => navigate("/addjob")}>
               Add Job
             </CommonButton>

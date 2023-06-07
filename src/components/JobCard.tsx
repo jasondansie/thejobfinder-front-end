@@ -18,24 +18,24 @@ const JobCard: React.FC<IJobShort> = ({ _id, company, Position, jobDescription, 
       <Card.Body>
         <Card.Title className='mb-2'>{company}</Card.Title>
         <Row>
-          <Col className='mb-2'>
+          <Col xs={6} className='mb-2'>
             <Card.Text>
               Date applied: 
             </Card.Text> 
           </Col>
-          <Col xs={6}>
+          <Col xs={4}>
           {dateApplied}
           </Col>
           <Col> 
           </Col>
         </Row>
         <Row>
-          <Col className='mb-3'>
+          <Col xs={6} className='mb-3'>
             <Card.Text>
-            Response from company: 
+            company Response: 
             </Card.Text> 
           </Col>
-          <Col xs={6}>
+          <Col xs={4}>
           {response}
           </Col>
           <Col> 

@@ -17,7 +17,7 @@ const NavMenu = () => {
         <Container>
           <Navbar.Brand>
             <LinkContainer to="/home">
-              <Nav.Link>TheJobFinder</Nav.Link>
+              <Nav.Link>The Job Finder</Nav.Link>
             </LinkContainer>
           </Navbar.Brand>
           <Navbar.Toggle
