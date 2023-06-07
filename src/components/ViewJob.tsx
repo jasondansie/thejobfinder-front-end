@@ -37,7 +37,6 @@ const ViewJob: React.FC = () => {
       <div>
         <h3>{jobListing.company}</h3>
         <p>Position: {jobListing.Position}</p>
-        <p>Job Description: {jobListing.jobDescription}</p>
         <p>Company WebSite: <a href={jobListing.companyWebSite} aria-label="Go to Company Website" target="_blank" rel="noopener noreferrer"> {jobListing.company}</a> </p>
         <p>Application Link: <a href={jobListing.applicationLink} aria-label="Go to job link" target="_blank" rel="noopener noreferrer"> {jobListing.Position}</a> </p>
         <p>Response: {jobListing.response}</p>
@@ -46,6 +45,7 @@ const ViewJob: React.FC = () => {
         <p>Recruiter Position: {jobListing.recruiterPosition}</p>
         <p>Date Applied: {jobListing.dateApplied}</p>
         <p>Did You Apply: {applied}</p>
+        <p>Job Description: {jobListing.jobDescription}</p>
       </div>
     </div>
   );

@@ -24,8 +24,8 @@ const NavMenu = () => {
             aria-controls="responsive-navbar-nav"
             onClick={handleToggle}
           />
-          <Navbar.Collapse id="responsive-navbar-nav" in={expanded}>
-            <Nav className="me-auto">
+          <Navbar.Collapse className="justify-content-end" id="responsive-navbar-nav" in={expanded} >
+            <Nav>
               <LinkContainer to="/jobList">
                 <Nav.Link>Jobs</Nav.Link>
               </LinkContainer>
@@ -44,6 +44,7 @@ const NavMenu = () => {
       </Navbar>
       <br />
     </nav>
+    
   );
 };
 
