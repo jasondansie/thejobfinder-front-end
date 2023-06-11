@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { initializeJobs } from '../features/jobs/jobsSlice';
 import { RootState, AppDispatch } from '../app/store';
 import JobCard from './JobCard';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Button, Col, Container, Form, InputGroup, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 import CommonButton from './CommonButton';
 import { IJobShort } from '../types';
@@ -16,9 +16,26 @@ const Jobs: React.FC = () => {
   const jobsList = useSelector((state: RootState) => state.jobs.jobs);
   const loading = useSelector((state: RootState) => state.jobs.isLoading);
 
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filterValue, setFilterValue] = useState('1');
+
   useEffect(() => {
     dispatch(initializeJobs());
   }, [dispatch]);
+
+  const filteredJobs = jobsList.filter((job: IJobShort) => {
+    const matchSearchQuery = job.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      job.Position.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      job.jobDescription.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const matchFilter = filterValue === '1' || job.response === filterValue;
+
+    return matchSearchQuery && matchFilter;
+  });
+
+  const handleSearch = () => {
+    // Perform the search action here
+  };
 
   return (
     <div>
@@ -33,12 +50,38 @@ const Jobs: React.FC = () => {
             </CommonButton>
           </Col>
         </Row>
+        <Row className='mb-3'>
+          <Col xs={6} md={3} className='pt-2'>
+            <Form className="d-flex">
+              <Form.Control
+                type="search"
+                placeholder="Search"
+                className="me-2"
+                aria-label="Search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <Button variant="outline-success" onClick={() => handleSearch()}>Search</Button>
+            </Form>
+          </Col>
+          <Col xs={6} md={3} className='pt-2'>
+            <InputGroup>
+              <InputGroup.Text id="inputGroup-sizing-lg">Filter by:</InputGroup.Text>
+              <Form.Select aria-label="Default select example" value={filterValue} onChange={(e) => setFilterValue(e.target.value)}>
+                <option value="1">none</option>
+                <option value="Accepted">Accepted</option>
+                <option value="">No Response</option>
+                <option value="Rejected">Rejected</option>
+              </Form.Select>
+            </InputGroup>
+          </Col>
+        </Row>
       </Container>
-      
+
       {loading ? (
         <h1>Loading.... ... ...</h1>
       ) : (
-        jobsList.map((job: IJobShort) => (
+        filteredJobs.map((job: IJobShort) => (
           <JobCard
             key={job._id}
             company={job.company}
