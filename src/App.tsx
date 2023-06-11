@@ -9,6 +9,7 @@ import InterviewTips from './components/InterviewTips';
 import AddJob from './components/AddJob';
 import ViewJob from './components/ViewJob';
 import PersonlLinks from './components/PersonlLinks';
+import Login from './components/Login';
 
 function App() {
   return ( 
@@ -23,6 +24,7 @@ function App() {
           <Route path="/addjob" element={<AddJob />} />
           <Route path="/viewjob/:id" element={<ViewJob />} />
           <Route path="/personallinks" element={<PersonlLinks />} />
+          <Route path="/login" element={<Login />} />
         </Route>
       </Routes>
     </BrowserRouter>
