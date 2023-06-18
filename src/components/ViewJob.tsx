@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router';
 import { IJob } from '../types';
+import classes from './Spinner.module.css'
 
 const ViewJob: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -24,7 +25,7 @@ const ViewJob: React.FC = () => {
   }, [baseurl]);
 
   if (!jobListing) {
-    return <div>Loading...</div>;
+    return <div className={classes.ldsellipsis}><h4>Loading </h4><div></div><div></div><div></div><div></div></div>
   }
 
   if (jobListing?.applied) {

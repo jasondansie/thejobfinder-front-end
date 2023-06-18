@@ -79,7 +79,7 @@ const Jobs: React.FC = () => {
       </Container>
 
       {loading ? (
-        <h1>Loading.... ... ...</h1>
+        <div className={classes.ldsellipsis}><h4>Loading </h4><div></div><div></div><div></div><div></div></div>
       ) : (
         filteredJobs.map((job: IJobShort) => (
           <JobCard
