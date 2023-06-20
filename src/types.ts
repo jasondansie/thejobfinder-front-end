@@ -1,5 +1,6 @@
 export interface IJob {
     _id: string;
+    userId: string;
     company: string;
     companyWebSite?: string;
     applicationLink: string;
@@ -38,6 +39,7 @@ export interface IJob {
 
   export interface IUser {
     id: string;
+    userId: string;
     name: string;
     email: string;
     givenName: string;
@@ -45,10 +47,11 @@ export interface IJob {
     picture: string;
 }
 
-export interface RootState {
+export interface userState {
   users: {
     usersList: IUser[];
     appUser: IUser | null;
     isLoggedIn: boolean;
+    jobs: IJob[];
   };
 }

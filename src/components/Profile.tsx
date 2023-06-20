@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { IUser, RootState } from '../types';
+import { IUser } from '../types';
 import { googleLogout } from '@react-oauth/google';
 import { setAppUser, setIsLoggedIn, setUserslist } from '../features/users/userSlice';
-import { AppDispatch } from '../app/store';
+import { AppDispatch, RootState } from '../app/store';
 import { useNavigate } from 'react-router';
 
 

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { initializeJobs } from '../features/jobs/jobsSlice';
-import { RootState, AppDispatch } from '../app/store';
+import {AppDispatch, RootState } from '../app/store';
+
 import JobCard from './JobCard';
 import { Button, Col, Container, Form, InputGroup, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 import CommonButton from './CommonButton';
-import { IJobShort } from '../types';
+import { IJob, IJobShort } from '../types';
 import classes from './Jobs.module.css';
 
 const Jobs: React.FC = () => {
@@ -15,6 +16,8 @@ const Jobs: React.FC = () => {
 
   const jobsList = useSelector((state: RootState) => state.jobs.jobs);
   const loading = useSelector((state: RootState) => state.jobs.isLoading);
+  const appUser = useSelector((state: RootState) => state.users.appUser);
+
 
   const [searchQuery, setSearchQuery] = useState('');
   const [filterValue, setFilterValue] = useState('1');
@@ -23,7 +26,16 @@ const Jobs: React.FC = () => {
     dispatch(initializeJobs());
   }, [dispatch]);
 
-  const filteredJobs = jobsList.filter((job: IJobShort) => {
+  let usersJobs: IJob[] = [];
+
+  if (appUser) {
+    usersJobs = jobsList.filter((job) => job.userId === `${appUser.id}`);
+  }
+  else{
+    console.log("appUser not loaded");
+  }
+
+  const filteredJobs = usersJobs.filter((job: IJobShort) => {
     const matchSearchQuery = job.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
       job.Position.toLowerCase().includes(searchQuery.toLowerCase()) ||
       job.jobDescription.toLowerCase().includes(searchQuery.toLowerCase());

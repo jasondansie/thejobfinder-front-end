@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useGoogleLogin, TokenResponse } from '@react-oauth/google';
 import axios from 'axios';
-import { IUser, RootState } from '../types';
+import { IUser } from '../types';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../app/store';
+import { AppDispatch, RootState } from '../app/store';
 import { setUserslist, setAppUser, setIsLoggedIn } from '../features/users/userSlice';
 import { useNavigate } from 'react-router';
 

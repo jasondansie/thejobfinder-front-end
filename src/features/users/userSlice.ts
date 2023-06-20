@@ -1,4 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { IUser } from "../../types";
+
+interface UserState {
+  usersList: IUser[];
+    appUser: IUser | null;
+    isLoggedIn: boolean;
+}
 
 export const userSlice = createSlice({
   name: 'users',
@@ -6,7 +13,7 @@ export const userSlice = createSlice({
     usersList: [],
     appUser: null,
     isLoggedIn: false,
-  },
+  }as UserState,
   reducers: {
     setUserslist(state, action) {
       state.usersList = action.payload;
