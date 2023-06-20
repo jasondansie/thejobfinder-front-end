@@ -36,3 +36,11 @@ export interface IJob {
     response?: string;
   }
 
+  export interface IUser {
+    id: string;
+    name: string;
+    email: string;
+    givenName: string;
+    familyName: string;
+    picture: string;
+}
