@@ -75,7 +75,7 @@ const Login: React.FC = () => {
     try {
       console.log("userListLocal", userListLocal);
       if (userListLocal) {
-        const isUser = userListLocal.find((foundUser) => foundUser.id === user.id);
+        const isUser = userListLocal.find((foundUser) => foundUser.id === user.id.toString());
         console.log("isUser:", isUser);
 
         if (isUser) {

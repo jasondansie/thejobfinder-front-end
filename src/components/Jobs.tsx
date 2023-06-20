@@ -29,7 +29,7 @@ const Jobs: React.FC = () => {
   let usersJobs: IJob[] = [];
 
   if (appUser) {
-    usersJobs = jobsList.filter((job) => job.userId === `${appUser.id}`);
+    usersJobs = jobsList.filter((job) => job.userId === appUser.id.toString());
   }
   else{
     console.log("appUser not loaded");
