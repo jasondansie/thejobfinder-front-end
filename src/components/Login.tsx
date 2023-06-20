@@ -1,51 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { googleLogout, useGoogleLogin, TokenResponse } from '@react-oauth/google';
+import { useGoogleLogin, TokenResponse } from '@react-oauth/google';
 import axios from 'axios';
-import { IUser } from '../types';
+import { IUser, RootState } from '../types';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../app/store';
 import { setUserslist, setAppUser, setIsLoggedIn } from '../features/users/userSlice';
+import { useNavigate } from 'react-router';
 
-interface RootState {
-  users: {
-    usersList: IUser[];
-    appUser: IUser | null;
-    isLoggedIn: boolean;
-  };
-}
-
-interface IUser2 {
-  id: string;
-  name: string;
-  email: string;
-  givenName: string;
-  familyName: string;
-  picture: string;
-}
 
 const Login: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
-
-  const userList = useSelector((state: RootState) => state.users.usersList);
   const isLoggedIn = useSelector((state: RootState) => state.users.isLoggedIn);
-  const appUser = useSelector((state: RootState) => state.users.appUser);
-
+  const navigate = useNavigate()
   const [userListLocal, setUserListLocal] = useState<IUser[] | null>(null);
 
-  console.log("userListLocal", userListLocal);
-
-
-  // useEffect(() => {
-  //   axios
-  //     .get<IUser[]>("https://the-job-finder-back-end.onrender.com/api/v1/user")
-  //     .then((res) => {
-  //       dispatch(setUserslist(res.data));
-  //       setUserListLocal(res.data);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, [dispatch]);
-
-  const getUserList = async () => {
+  useEffect(() => {
     axios
       .get<IUser[]>("https://the-job-finder-back-end.onrender.com/api/v1/user")
       .then((res) => {
@@ -53,7 +22,20 @@ const Login: React.FC = () => {
         setUserListLocal(res.data);
       })
       .catch((err) => console.log(err));
-  }
+  }, [dispatch]);
+
+
+  const getUserList = async () => {
+    try {
+      const response = await axios.get<IUser[]>("https://the-job-finder-back-end.onrender.com/api/v1/user");
+      dispatch(setUserslist(response.data));
+      console.log("setUserListLocal", response.data);
+      setUserListLocal(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
 
   const addUser = async (user: IUser) => {
     try {
@@ -80,13 +62,14 @@ const Login: React.FC = () => {
       const userProfile = response.data;
       console.log("User profile:", userProfile);
       dispatch(setAppUser(userProfile));
-      checkIfIdExists(userProfile);
+      await checkIfIdExists(userProfile);
     } catch (error) {
       console.error('Error occurred while loading profile:', error);
     }
   };
 
   const checkIfIdExists = async (user: IUser) => {
+    getUserList();
     console.log("checking user:");
 
     try {
@@ -98,6 +81,7 @@ const Login: React.FC = () => {
         if (isUser) {
           console.log("User found:", isUser);
         } else {
+          console.log("adding user");
           await addUser(user);
         }
       }
@@ -111,45 +95,21 @@ const Login: React.FC = () => {
       dispatch(setIsLoggedIn(true));
       getUserList();
       console.log("isLoggedIn", isLoggedIn);
+      console.log("Getting profile");
       getGoogleProfile(response);
+      navigate('/profile');
     },
     onError: (error) => console.log('Login Failed:', error),
   });
-
-  const logOut = () => {
-    googleLogout();
-    dispatch(setIsLoggedIn(false));
-    console.log("isLoggedIn", isLoggedIn);
-
-    dispatch(setAppUser(null));
-    dispatch(setUserslist([]));
-    setUserListLocal([]);
-    getUserList();
-
-  };
 
   return (
     <div>
       <h2>React Google Login</h2>
       <br />
-      <br />
-      {isLoggedIn ? (
-        <div>
-          <img src={appUser?.picture} alt="user profile" />
-          <h3>User Logged in</h3>
-          <p>Name: {appUser?.name}</p>
-          <p>Email Address: {appUser?.email}</p>
-          <br />
-          <br />
-          <p>loggedIn = {isLoggedIn}</p>
-          <button onClick={logOut}>Log out</button>
-        </div>
-      ) : (
+      <br />   
         <div>
           <button onClick={() => login()}>Sign in with Google </button>
-          <p>loggedIn = {isLoggedIn}</p>
         </div>
-      )}
     </div>
   );
   

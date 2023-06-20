@@ -44,3 +44,11 @@ export interface IJob {
     familyName: string;
     picture: string;
 }
+
+export interface RootState {
+  users: {
+    usersList: IUser[];
+    appUser: IUser | null;
+    isLoggedIn: boolean;
+  };
+}

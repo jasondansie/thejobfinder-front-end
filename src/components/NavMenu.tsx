@@ -38,6 +38,9 @@ const NavMenu = () => {
               <LinkContainer to="/interviewTips">
                 <Nav.Link>Interview tips</Nav.Link>
               </LinkContainer>
+              <LinkContainer to="/profile">
+                <Nav.Link>My Profile</Nav.Link>
+              </LinkContainer>
             </Nav>
           </Navbar.Collapse>
         </Container>
