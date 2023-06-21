@@ -4,11 +4,13 @@ import axios from 'axios';
 import { ISendJob } from '../types';
 import { useSelector } from 'react-redux';
 import { RootState } from '../app/store';
+import { useNavigate } from 'react-router';
 
 const AddJob: React.FC = () => {
     const baseurl = `https://the-job-finder-back-end.onrender.com/api/v1/jobs`;
 
     const appUser = useSelector((state: RootState) => state.users.appUser);
+    const navigate = useNavigate();
 
     let appUserId = "";
 
@@ -47,8 +49,8 @@ const AddJob: React.FC = () => {
           const response = await axios.post(baseurl, formData);
           // Handle successful job addition
           if (response && response.data && response.data.message) {
-            console.log(response.data.message); // Success message from the server
-            // Show a success message to the user or perform any other action
+            console.log(response.data.message); 
+            navigate('/jobList');
           }
         } catch (error) {
           console.error('An error occurred:', error);
@@ -104,6 +106,15 @@ const AddJob: React.FC = () => {
                 type="text"
                 name="jobDescription"
                 value={formData.jobDescription}
+                onChange={handleChange}
+            />
+            </Form.Group>
+            <Form.Group controlId="notes">
+            <Form.Label>Notes</Form.Label>
+            <Form.Control
+                type="text"
+                name="notes"
+                value={formData.notes}
                 onChange={handleChange}
             />
             </Form.Group>
@@ -167,15 +178,6 @@ const AddJob: React.FC = () => {
                 type="text"
                 name="recruiterPosition"
                 value={formData.recruiterPosition}
-                onChange={handleChange}
-            />
-            </Form.Group>
-            <Form.Group controlId="notes">
-            <Form.Label>notes</Form.Label>
-            <Form.Control
-                type="text"
-                name="notes"
-                value={formData.notes}
                 onChange={handleChange}
             />
             </Form.Group>
