@@ -2,9 +2,19 @@ import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { ISendJob } from '../types';
+import { useSelector } from 'react-redux';
+import { RootState } from '../app/store';
 
 const AddJob: React.FC = () => {
     const baseurl = `https://the-job-finder-back-end.onrender.com/api/v1/jobs`;
+
+    const appUser = useSelector((state: RootState) => state.users.appUser);
+
+    let appUserId = "";
+
+    if (appUser) {
+      appUserId = appUser.id.toString();
+    }
 
     const [formData, setFormData] = useState<ISendJob>({
         company: '',
@@ -16,8 +26,12 @@ const AddJob: React.FC = () => {
         response: '',
         reasonToWork: '',
         recruiterName: '',
+        recruiterEmail: '',
+        recruiterPhonenumber: '',
         recruiterPosition: '',
+        notes: '',
         applied: false,
+        userId: appUserId,
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -129,12 +143,39 @@ const AddJob: React.FC = () => {
                 onChange={handleChange}
             />
             </Form.Group>
+            <Form.Group controlId="recruiterEmail">
+            <Form.Label>Recruiter's Email</Form.Label>
+            <Form.Control
+                type="text"
+                name="recruiterEmail"
+                value={formData.recruiterEmail}
+                onChange={handleChange}
+            />
+            </Form.Group>
+            <Form.Group controlId="recruiterPhonenumber">
+            <Form.Label>Recruiter's Phonenumber</Form.Label>
+            <Form.Control
+                type="text"
+                name="recruiterPhonenumber"
+                value={formData.recruiterPhonenumber}
+                onChange={handleChange}
+            />
+            </Form.Group>
             <Form.Group controlId="recruiterPosition">
             <Form.Label>Recruiter's Position</Form.Label>
             <Form.Control
                 type="text"
                 name="recruiterPosition"
                 value={formData.recruiterPosition}
+                onChange={handleChange}
+            />
+            </Form.Group>
+            <Form.Group controlId="notes">
+            <Form.Label>notes</Form.Label>
+            <Form.Control
+                type="text"
+                name="notes"
+                value={formData.notes}
                 onChange={handleChange}
             />
             </Form.Group>

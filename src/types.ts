@@ -11,6 +11,9 @@ export interface IJob {
     reasonToWork?: string;
     recruiterName?: string;
     recruiterPosition?: string;
+    recruiterEmail?: string;
+    recruiterPhonenumber?: string;
+    notes?: string;
     applied: boolean;
   }
 
@@ -24,8 +27,13 @@ export interface IJob {
     response?: string;
     reasonToWork?: string;
     recruiterName?: string;
+    recruiterEmail?: string;
+    recruiterPhonenumber?: string;
     recruiterPosition?: string;
+    notes?: string;
     applied: boolean;
+    userId: string;
+
   }
 
   export interface IJobShort {

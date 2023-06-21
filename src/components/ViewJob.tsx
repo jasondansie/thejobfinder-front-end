@@ -44,8 +44,11 @@ const ViewJob: React.FC = () => {
         <p>Reason To Work Here: {jobListing.reasonToWork}</p>
         <p>Recruiter Name: {jobListing.recruiterName}</p>
         <p>Recruiter Position: {jobListing.recruiterPosition}</p>
+        <p>Recruiter Email: {jobListing.recruiterEmail}</p>
+        <p>Recruiter Phonenumber: {jobListing.recruiterPhonenumber}</p>
         <p>Date Applied: {jobListing.dateApplied}</p>
         <p>Did You Apply: {applied}</p>
+        <p>notes: {jobListing.notes}</p>
         <p>Job Description: {jobListing.jobDescription}</p>
       </div>
     </div>
