@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router';
 import CommonButton from './CommonButton';
 import { IJob, IJobShort } from '../types';
 import classes from './Jobs.module.css';
+import checkLoginService from '../services/checkLogin';
 
 const Jobs: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -17,10 +18,25 @@ const Jobs: React.FC = () => {
   const jobsList = useSelector((state: RootState) => state.jobs.jobs);
   const loading = useSelector((state: RootState) => state.jobs.isLoading);
   const appUser = useSelector((state: RootState) => state.users.appUser);
+  const isLoggedIn = useSelector((state: RootState) => state.users.isLoggedIn);
 
 
   const [searchQuery, setSearchQuery] = useState('');
   const [filterValue, setFilterValue] = useState('1');
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+        console.log("isLoggedIn", isLoggedIn);
+        navigate('/login');
+    }
+
+    try {
+    checkLoginService.checkIfLoggedIn(dispatch, navigate);
+    } catch (error) {
+    console.error('Error parsing user data:', error);
+    }
+  }, [dispatch, navigate, isLoggedIn]);
+
 
   useEffect(() => {
     dispatch(initializeJobs());
