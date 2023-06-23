@@ -5,13 +5,32 @@ import { IJob } from '../types';
 import classes from './Spinner.module.css'
 import { Col, Container, Row } from 'react-bootstrap';
 import CommonButton from './CommonButton';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../app/store';
+import checkLoginService from '../services/checkLogin';
 
 const ViewJob: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const baseurl = `https://the-job-finder-back-end.onrender.com/api/v1/jobs/${id}`;
   const [jobListing, setJobListing] = useState<IJob | null>(null);
+  const isLoggedIn = useSelector((state: RootState) => state.users.isLoggedIn);
+  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
   let applied = "no";
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+        console.log("isLoggedIn", isLoggedIn);
+        navigate('/login');
+    }
+
+    try {
+    checkLoginService.checkIfLoggedIn(dispatch, navigate);
+    } catch (error) {
+    console.error('Error parsing user data:', error);
+    }
+  }, [dispatch, navigate, isLoggedIn]);
+
 
   useEffect(() => {
     const fetchData = async () => {

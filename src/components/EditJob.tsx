@@ -3,12 +3,32 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router';
 import { IJob } from '../types';
 import { Container, Form, Button } from 'react-bootstrap';
+import { setIsLoggedIn } from '../features/users/userSlice';
+import checkLoginService from '../services/checkLogin';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../app/store';
 
 const EditJob: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const baseurl = `https://the-job-finder-back-end.onrender.com/api/v1/jobs/${id}`;
   const [jobListing, setJobListing] = useState<IJob | null>(null);
   const navigate = useNavigate();
+  const isLoggedIn = useSelector((state: RootState) => state.users.isLoggedIn);
+  const dispatch: AppDispatch = useDispatch();
+
+  useEffect(() => {
+    if (!setIsLoggedIn) {
+        console.log("isLoggedIn", isLoggedIn);
+        navigate('/login');
+    }
+
+    try {
+    checkLoginService.checkIfLoggedIn(dispatch, navigate);
+    } catch (error) {
+    console.error('Error parsing user data:', error);
+    }
+  }, [dispatch, navigate, isLoggedIn]);
+
 
   useEffect(() => {
     const fetchData = async () => {
