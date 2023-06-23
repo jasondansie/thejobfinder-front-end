@@ -5,6 +5,7 @@ export interface IJob {
     companyWebSite?: string;
     applicationLink: string;
     Position: string;
+    notes?: string;
     jobDescription: string;
     dateApplied?: string;
     response?: string;
@@ -13,7 +14,7 @@ export interface IJob {
     recruiterPosition?: string;
     recruiterEmail?: string;
     recruiterPhonenumber?: string;
-    notes?: string;
+    
     applied: boolean;
   }
 
@@ -22,6 +23,7 @@ export interface IJob {
     companyWebSite?: string;
     applicationLink: string;
     Position: string;
+    notes?: string;
     jobDescription: string;
     dateApplied?: string;
     response?: string;
@@ -30,7 +32,6 @@ export interface IJob {
     recruiterEmail?: string;
     recruiterPhonenumber?: string;
     recruiterPosition?: string;
-    notes?: string;
     applied: boolean;
     userId: string;
 

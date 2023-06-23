@@ -11,6 +11,7 @@ import ViewJob from './components/ViewJob';
 import PersonlLinks from './components/PersonlLinks';
 import Login from './components/Login';
 import Profile from './components/Profile';
+import EditJob from './components/EditJob';
 
 function App() {
   return ( 
@@ -27,6 +28,7 @@ function App() {
           <Route path="/personallinks" element={<PersonlLinks />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/editjob/:id" element={<EditJob />} />
         </Route>
       </Routes>
     </BrowserRouter>
