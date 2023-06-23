@@ -16,44 +16,52 @@ const JobCard: React.FC<IJobShort> = ({ _id, company, Position, jobDescription, 
         <Card>
       <Card.Header>{Position}</Card.Header>
       <Card.Body>
-        <Card.Title className='mb-2'>{company}</Card.Title>
+        <Card.Title className='mb-2 ms-1'>{company}</Card.Title>
         <Row>
-          <Col xs={6} className='mb-2'>
+          <Col xs={6} md={5} className='mb-2 ms-1'>
             <Card.Text>
               Date applied: 
             </Card.Text> 
           </Col>
-          <Col xs={4}>
+          <Col xs={5} md={5}> 
           {dateApplied}
           </Col>
           <Col> 
           </Col>
         </Row>
         <Row>
-          <Col xs={6} className='mb-3'>
+          <Col xs={6} className='mb-3 ms-1' md={5}>
             <Card.Text>
-            company Response: 
+            Company Response: 
             </Card.Text> 
           </Col>
-          <Col xs={4}>
+          <Col xs={5} md={5}>
           {response}
           </Col>
           <Col> 
           </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Card.Text> 
+              <Accordion>
+                <Accordion.Item eventKey="0">
+                  <Accordion.Header>{Position} job listing: </Accordion.Header>
+                    <Accordion.Body>
+                      {jobDescription}
+                    </Accordion.Body>
+                  </Accordion.Item>
+              </Accordion>      
+            </Card.Text>   
+          </Col>
         </Row>      
-        <Card.Text> 
-        <Accordion>
-          <Accordion.Item eventKey="0">
-            <Accordion.Header>{Position} job listing: </Accordion.Header>
-              <Accordion.Body>
-                {jobDescription}
-              </Accordion.Body>
-            </Accordion.Item>
-          </Accordion>      
-        </Card.Text>     
-          <CommonButton variant="secondary" onClick={() => navigate(linkWithId)}>
-              {"View Job"}
-          </CommonButton>
+        <Row>
+          <Col>
+            <CommonButton variant="secondary" onClick={() => navigate(linkWithId)}>
+                {"View Job"}
+            </CommonButton>
+          </Col>
+        </Row>            
       </Card.Body>
         </Card>
       </Row>

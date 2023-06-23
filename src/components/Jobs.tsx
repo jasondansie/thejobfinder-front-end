@@ -69,17 +69,17 @@ const Jobs: React.FC = () => {
     <div>
       <Container className={classes.jobs}>
         <Row>
-          <Col xs={6} md={3} className='pt-2'>
+          <Col xs={7} md={3} className='pt-2'>
             <h1>Your Job List</h1>
           </Col>
-          <Col xs={6} md={2} className="text-md-end">
+          <Col xs={5} md={2} className="text-md-end">
             <CommonButton variant="primary" onClick={() => navigate("/addjob")}>
               Add Job
             </CommonButton>
           </Col>
         </Row>
         <Row className='mb-3'>
-          <Col xs={6} md={3} className='pt-2'>
+          <Col xs={12} md={4} className='pt-2'>
             <Form className="d-flex">
               <Form.Control
                 type="search"
@@ -92,7 +92,7 @@ const Jobs: React.FC = () => {
               <Button variant="outline-success" onClick={() => handleSearch()}>Search</Button>
             </Form>
           </Col>
-          <Col xs={6} md={3} className='pt-2'>
+          <Col xs={12} md={4} className='pt-2'>
             <InputGroup>
               <InputGroup.Text id="inputGroup-sizing-lg">Filter by:</InputGroup.Text>
               <Form.Select aria-label="Default select example" value={filterValue} onChange={(e) => setFilterValue(e.target.value)}>
@@ -109,17 +109,25 @@ const Jobs: React.FC = () => {
       {loading ? (
         <div className={classes.ldsellipsis}><h4>Loading </h4><div></div><div></div><div></div><div></div></div>
       ) : (
-        filteredJobs.map((job: IJobShort) => (
-          <JobCard
-            key={job._id}
-            company={job.company}
-            Position={job.Position}
-            jobDescription={job.jobDescription}
-            dateApplied={job.dateApplied}
-            response={job.response}
-            _id={job._id}
-          />
-        ))
+        <Container className={classes.jobs}>
+          <Row>
+            <Col>
+              {
+                filteredJobs.map((job: IJobShort) => (
+                  <JobCard
+                    key={job._id}
+                    company={job.company}
+                    Position={job.Position}
+                    jobDescription={job.jobDescription}
+                    dateApplied={job.dateApplied}
+                    response={job.response}
+                    _id={job._id}
+                  />
+                ))
+              }
+            </Col>
+        </Row>
+        </Container>
       )}
     </div>
   );
