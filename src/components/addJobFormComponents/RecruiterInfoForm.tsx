@@ -1,5 +1,4 @@
 import React from 'react';
-import { IForm } from '../../types';
 import { Form } from 'react-bootstrap';
 import { AppDispatch, RootState } from '../../app/store';
 import { useDispatch, useSelector } from 'react-redux';

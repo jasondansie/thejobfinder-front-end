@@ -10,6 +10,7 @@ import CompanyInfoForm from './addJobFormComponents/CompanyInfoForm';
 import JobInfoForm from './addJobFormComponents/JobInfoForm';
 import RecruiterInfoForm from './addJobFormComponents/RecruiterInfoForm';
 import { ISendJob } from '../types';
+import { setFormData } from '../features/forms/jobFormSlice';
 
 const AddJob: React.FC = () => {
   const baseurl = `https://the-job-finder-back-end.onrender.com/api/v1/jobs`;
@@ -83,7 +84,7 @@ const AddJob: React.FC = () => {
           const response = await axios.post(baseurl, formDataWithUserId);
 
           if (response && response.data && response.data.message) {
-            console.log(response.data.message); 
+            dispatch(setFormData([]));
             navigate('/jobList');
           }
         } catch (error) {
