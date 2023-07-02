@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../app/store';
 import checkLoginService from '../services/checkLogin';
 import { useNavigate } from 'react-router';
+import Jobs from './Jobs';
 
 
 const InterviewTips = () => {
@@ -23,10 +24,11 @@ const InterviewTips = () => {
         }
       }, [dispatch, navigate, isLoggedIn]);
 
+
     return (
         <div>
-         <h1>Interview Tips</h1>  
-        </div>
+      <h1>Interview Tips</h1>
+    </div>
     );
 };
 

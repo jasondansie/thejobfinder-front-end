@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import jobsReducer from '../features/jobs/jobsSlice';
 import userReducer from '../features/users/userSlice';
+import jobFormReducer from '../features/forms/jobFormSlice';
 
 const store = configureStore({
   reducer: {
     jobs: jobsReducer,
     users: userReducer,
+    jobForm: jobFormReducer
   },
 });
 

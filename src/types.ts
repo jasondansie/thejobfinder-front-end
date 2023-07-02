@@ -1,3 +1,5 @@
+import { ChangeEvent } from "react";
+
 export interface IJob {
     _id: string;
     userId: string;
@@ -34,7 +36,6 @@ export interface IJob {
     recruiterPosition?: string;
     applied: boolean;
     userId: string;
-
   }
 
   export interface IJobShort {
@@ -63,4 +64,14 @@ export interface userState {
     isLoggedIn: boolean;
     jobs: IJob[];
   };
+}
+
+export interface IForm {
+  handleSubmit: React.FormEventHandler<HTMLFormElement>,
+  
+  formData: ISendJob,
+  handleChange: React.ChangeEventHandler<HTMLInputElement>,
+}
+export interface IFormData {
+  formData: ISendJob[],
 }

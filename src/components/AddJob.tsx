@@ -1,19 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import axios from 'axios';
-import { ISendJob } from '../types';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../app/store';
 import { useNavigate } from 'react-router';
 import checkLoginService from '../services/checkLogin';
+import classes from './AddJob.module.css'
+import CompanyInfoForm from './addJobFormComponents/CompanyInfoForm';
+import JobInfoForm from './addJobFormComponents/JobInfoForm';
+import RecruiterInfoForm from './addJobFormComponents/RecruiterInfoForm';
+import { setFormData } from '../features/forms/jobFormSlice';
+import { ISendJob } from '../types';
 
 const AddJob: React.FC = () => {
     const baseurl = `https://the-job-finder-back-end.onrender.com/api/v1/jobs`;
+    const localurl = `http://localhost:3030/api/v1/jobs`;
 
     const appUser = useSelector((state: RootState) => state.users.appUser);
     const isLoggedIn = useSelector((state: RootState) => state.users.isLoggedIn);
     const dispatch: AppDispatch = useDispatch();
     const navigate = useNavigate();
+    const jobFormData = useSelector((state: RootState) => state.jobForm.formData);
 
     useEffect(() => {
       if (!isLoggedIn) {
@@ -29,203 +36,120 @@ const AddJob: React.FC = () => {
     }, [dispatch, navigate, isLoggedIn]);
 
 
-    let appUserId = "";
+let userId = "";
 
-    if (appUser) {
-      appUserId = appUser.id.toString();
-    }
+if (appUser) {
+  userId = appUser.id;
+}
 
-    const [formData, setFormData] = useState<ISendJob>({
-        company: '',
-        companyWebSite: '',
-        applicationLink: '',
-        Position: '',
-        jobDescription: '',
-        dateApplied: '',
-        response: '',
-        reasonToWork: '',
-        recruiterName: '',
-        recruiterEmail: '',
-        recruiterPhonenumber: '',
-        recruiterPosition: '',
-        notes: '',
-        applied: false,
-        userId: appUserId,
-    });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value, type } = e.target;
-        const fieldValue = type === 'checkbox' ? e.target.checked : value;
-        setFormData({ ...formData, [name]: fieldValue });
-      };
+    const [steps, setSteps] = useState([
+      {
+        key: "firstStep",
+        label: "Add Company Info",
+        isDone: true,
+        component: <CompanyInfoForm
+          userId={userId}
+        />
+      },
+      {
+        key: "secondStep",
+        label: "Add Job Info",
+        isDone: false,
+        component: <JobInfoForm />,
+      },
+      {
+        key: "finalStep",
+        label: "Add Recruiter Info",
+        isDone: false,
+        component: <RecruiterInfoForm/>,
+      },
+    ]);
+    const [activeStep, setActiveStep] = useState(steps[0]);
 
-      const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        console.log("formData",formData);
-        try {
-          const response = await axios.post(baseurl, formData);
-          // Handle successful job addition
-          if (response && response.data && response.data.message) {
-            console.log(response.data.message); 
-            navigate('/jobList');
-          }
-        } catch (error) {
-          console.error('An error occurred:', error);
-          // Handle error, e.g., show an error message
+    const handleNext = async() => {
+      const index = steps.findIndex((x) => x.key === activeStep.key);
+      if (index < steps.length - 1) {
+        setActiveStep(steps[index + 1]);
+      } else {
+        if (steps[steps.length - 1].key === activeStep.key) {
+          console.log("appUser?.id", appUser?.id);
+         
+          console.log("sending form");      
+      try {
+        console.log("jobFormData",jobFormData);
+
+        const formDataWithUserId: ISendJob = {
+          ...jobFormData,
+          userId: userId,
+        };
+
+        const response = await axios.post(baseurl, formDataWithUserId);
+
+        if (response && response.data && response.data.message) {
+          console.log(response.data.message); 
+          navigate('/jobList');
         }
-      };
+      } catch (error) {
+        console.error('An error occurred:', error);
+        console.log('An error occurred:', error);
+      }
+        } else {
+          alert("You have completed all steps.");
+        }
+      }
+    };
 
+    const handleBack = () => {
+      const index = steps.findIndex((x) => x.key === activeStep.key);
+      if (index > 0) {
+        setActiveStep(steps[index - 1]);
+      } else if (index === 0) {
+        navigate("/SendForm");
+      }
+    };
+     
   return (
     <div>
       <h1>Add a Job</h1>
-      
-      <Form onSubmit={handleSubmit}>
-        <div>
-            <Form.Group controlId="company">
-            <Form.Label>Company</Form.Label>
-            <Form.Control
-                type="text"
-                name="company"
-                value={formData.company}
-                onChange={handleChange}
-            />
-            </Form.Group>
-            <Form.Group controlId="companyWebSite">
-            <Form.Label>Company WebSite</Form.Label>
-            <Form.Control
-                type="text"
-                name="companyWebSite"
-                value={formData.companyWebSite}
-                onChange={handleChange}
-            />
-            </Form.Group>
-            <Form.Group controlId="applicationLink">
-            <Form.Label>Application Link</Form.Label>
-            <Form.Control
-                type="text"
-                name="applicationLink"
-                value={formData.applicationLink}
-                onChange={handleChange}
-            />
-            </Form.Group>
-            <Form.Group controlId="Position">
-            <Form.Label>Position</Form.Label>
-            <Form.Control
-                type="text"
-                name="Position"
-                value={formData.Position}
-                onChange={handleChange}
-            />
-            </Form.Group>
-            <Form.Group controlId="jobDescription">
-            <Form.Label>Job Description</Form.Label>
-            <Form.Control
-                type="text"
-                name="jobDescription"
-                value={formData.jobDescription}
-                onChange={handleChange}
-            />
-            </Form.Group>
-            <Form.Group controlId="notes">
-            <Form.Label>Notes</Form.Label>
-            <Form.Control
-                type="text"
-                name="notes"
-                value={formData.notes}
-                onChange={handleChange}
-            />
-            </Form.Group>
-            <Form.Group controlId="dateApplied">
-            <Form.Label>Date Applied</Form.Label>
-            <Form.Control
-                type="text"
-                name="dateApplied"
-                value={formData.dateApplied}
-                onChange={handleChange}
-            />
-            </Form.Group>
-            <Form.Group controlId="response">
-            <Form.Label>Response</Form.Label>
-            <Form.Control
-                type="text"
-                name="response"
-                value={formData.response}
-                onChange={handleChange}
-            />
-            </Form.Group>
-            <Form.Group controlId="reasonToWork">
-            <Form.Label>Reason To Work at This Company</Form.Label>
-            <Form.Control
-                type="text"
-                name="reasonToWork"
-                value={formData.reasonToWork}
-                onChange={handleChange}
-            />
-            </Form.Group>
-            <Form.Group controlId="recruiterName">
-            <Form.Label>Recruiter's Name</Form.Label>
-            <Form.Control
-                type="text"
-                name="recruiterName"
-                value={formData.recruiterName}
-                onChange={handleChange}
-            />
-            </Form.Group>
-            <Form.Group controlId="recruiterEmail">
-            <Form.Label>Recruiter's Email</Form.Label>
-            <Form.Control
-                type="text"
-                name="recruiterEmail"
-                value={formData.recruiterEmail}
-                onChange={handleChange}
-            />
-            </Form.Group>
-            <Form.Group controlId="recruiterPhonenumber">
-            <Form.Label>Recruiter's Phonenumber</Form.Label>
-            <Form.Control
-                type="text"
-                name="recruiterPhonenumber"
-                value={formData.recruiterPhonenumber}
-                onChange={handleChange}
-            />
-            </Form.Group>
-            <Form.Group controlId="recruiterPosition">
-            <Form.Label>Recruiter's Position</Form.Label>
-            <Form.Control
-                type="text"
-                name="recruiterPosition"
-                value={formData.recruiterPosition}
-                onChange={handleChange}
-            />
-            </Form.Group>
-            <Form.Group controlId="applied">
-          <Form.Label>Did you Apply?</Form.Label>
-          <div>
-            <Form.Check
-              type="radio"
-              id="applied-yes"
-              name="applied"
-              value="true"
-              label="Yes"
-              checked={formData.applied === true}
-              onChange={handleChange}
-            />
-            <Form.Check
-              type="radio"
-              id="applied-no"
-              name="applied"
-              value="false"
-              label="No"
-              checked={formData.applied === false}
-              onChange={handleChange}
-            />
+      <div className={classes.createForm_container}>
+        <div className={classes.box}>
+          <div className={classes.steps}>
+            <ul className="nav">
+              {steps.map((step, i) => (
+                <li
+                  key={i}
+                  className={`${
+                    activeStep.key === step.key ? classes.active : ""
+                  } ${step.isDone ? classes.done : ""}`}
+                >
+                  <div>
+                    {"Step"} {i + 1}
+                    <br />
+                    <span>{(`${step.label}`)}</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
-        </Form.Group>
+          <div className={classes.step_component}>{activeStep.component}</div>
+          <div className={classes.btn_component}> 
+            <Button
+                type="button"
+                variant="secondary"
+                onClick={handleBack}
+                disabled={steps[0].key === activeStep.key}
+              >
+                {"Back"}
+            </Button>
+            <Button type="button" onClick={handleNext} variant="primary">
+              {steps[steps.length - 1].key !== activeStep.key
+                ? "Next"
+                : "Submit"}
+            </Button>
+          </div>
         </div>
-        <Button variant="primary" type="submit">
-          Add Job
-        </Button>
-      </Form>
+      </div>
     </div>
   );
 };
