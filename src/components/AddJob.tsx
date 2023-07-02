@@ -9,105 +9,101 @@ import classes from './AddJob.module.css'
 import CompanyInfoForm from './addJobFormComponents/CompanyInfoForm';
 import JobInfoForm from './addJobFormComponents/JobInfoForm';
 import RecruiterInfoForm from './addJobFormComponents/RecruiterInfoForm';
-import { setFormData } from '../features/forms/jobFormSlice';
 import { ISendJob } from '../types';
 
 const AddJob: React.FC = () => {
-    const baseurl = `https://the-job-finder-back-end.onrender.com/api/v1/jobs`;
-    const localurl = `http://localhost:3030/api/v1/jobs`;
+  const baseurl = `https://the-job-finder-back-end.onrender.com/api/v1/jobs`;
 
-    const appUser = useSelector((state: RootState) => state.users.appUser);
-    const isLoggedIn = useSelector((state: RootState) => state.users.isLoggedIn);
-    const dispatch: AppDispatch = useDispatch();
-    const navigate = useNavigate();
-    const jobFormData = useSelector((state: RootState) => state.jobForm.formData);
+  const appUser = useSelector((state: RootState) => state.users.appUser);
+  const isLoggedIn = useSelector((state: RootState) => state.users.isLoggedIn);
+  const jobFormData = useSelector((state: RootState) => state.jobForm.formData);
 
-    useEffect(() => {
-      if (!isLoggedIn) {
-          console.log("isLoggedIn", isLoggedIn);
-          navigate('/login');
-      }
-  
-      try {
-      checkLoginService.checkIfLoggedIn(dispatch, navigate);
-      } catch (error) {
-      console.error('Error parsing user data:', error);
-      }
-    }, [dispatch, navigate, isLoggedIn]);
+  const dispatch: AppDispatch = useDispatch();
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!isLoggedIn) {
+        console.log("isLoggedIn", isLoggedIn);
+        navigate('/login');
+    }
 
-let userId = "";
-
-if (appUser) {
-  userId = appUser.id;
-}
+    try {
+    checkLoginService.checkIfLoggedIn(dispatch, navigate);
+    } catch (error) {
+    console.error('Error parsing user data:', error);
+    }
+  }, [dispatch, navigate, isLoggedIn]);
 
 
-    const [steps, setSteps] = useState([
-      {
-        key: "firstStep",
-        label: "Add Company Info",
-        isDone: true,
-        component: <CompanyInfoForm
-          userId={userId}
-        />
-      },
-      {
-        key: "secondStep",
-        label: "Add Job Info",
-        isDone: false,
-        component: <JobInfoForm />,
-      },
-      {
-        key: "finalStep",
-        label: "Add Recruiter Info",
-        isDone: false,
-        component: <RecruiterInfoForm/>,
-      },
-    ]);
-    const [activeStep, setActiveStep] = useState(steps[0]);
+  let userId = "";
 
-    const handleNext = async() => {
-      const index = steps.findIndex((x) => x.key === activeStep.key);
-      if (index < steps.length - 1) {
-        setActiveStep(steps[index + 1]);
+  if (appUser) {
+    userId = appUser.id;
+  }
+
+
+  const [steps, setSteps] = useState([
+    {
+      key: "firstStep",
+      label: "Add Company Info",
+      isDone: true,
+      component: <CompanyInfoForm
+        userId={userId}
+      />
+    },
+    {
+      key: "secondStep",
+      label: "Add Job Info",
+      isDone: false,
+      component: <JobInfoForm />,
+    },
+    {
+      key: "finalStep",
+      label: "Add Recruiter Info",
+      isDone: false,
+      component: <RecruiterInfoForm/>,
+    },
+  ]);
+  const [activeStep, setActiveStep] = useState(steps[0]);
+
+  const handleNext = async() => {
+    const index = steps.findIndex((x) => x.key === activeStep.key);
+    if (index < steps.length - 1) {
+      setActiveStep(steps[index + 1]);
+    } else {
+      if (steps[steps.length - 1].key === activeStep.key) {   
+        try {
+          console.log("jobFormData",jobFormData);
+
+          const formDataWithUserId: ISendJob = {
+            ...jobFormData,
+            userId: userId,
+          };
+
+          const response = await axios.post(baseurl, formDataWithUserId);
+
+          if (response && response.data && response.data.message) {
+            console.log(response.data.message); 
+            navigate('/jobList');
+          }
+        } catch (error) {
+          console.error('An error occurred:', error);
+          console.log('An error occurred:', error);
+        }
       } else {
-        if (steps[steps.length - 1].key === activeStep.key) {
-          console.log("appUser?.id", appUser?.id);
-         
-          console.log("sending form");      
-      try {
-        console.log("jobFormData",jobFormData);
-
-        const formDataWithUserId: ISendJob = {
-          ...jobFormData,
-          userId: userId,
-        };
-
-        const response = await axios.post(baseurl, formDataWithUserId);
-
-        if (response && response.data && response.data.message) {
-          console.log(response.data.message); 
-          navigate('/jobList');
-        }
-      } catch (error) {
-        console.error('An error occurred:', error);
-        console.log('An error occurred:', error);
+        alert("You have completed all steps.");
       }
-        } else {
-          alert("You have completed all steps.");
-        }
-      }
-    };
+    }
+  };
 
-    const handleBack = () => {
-      const index = steps.findIndex((x) => x.key === activeStep.key);
-      if (index > 0) {
-        setActiveStep(steps[index - 1]);
-      } else if (index === 0) {
-        navigate("/SendForm");
-      }
-    };
+  const handleBack = () => {
+    const index = steps.findIndex((x) => x.key === activeStep.key);
+    if (index > 0) {
+      setActiveStep(steps[index - 1]);
+    } else if (index === 0) {
+      navigate("/SendForm");
+    }
+  };
      
   return (
     <div>
