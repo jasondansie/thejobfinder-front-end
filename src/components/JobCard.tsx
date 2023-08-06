@@ -5,11 +5,26 @@ import CommonButton from './CommonButton';
 import { useNavigate } from 'react-router';
 import { Accordion, Col, Container, Row } from 'react-bootstrap';
 import classes  from './JobCard.module.css'
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../app/store';
+import { setLoading } from '../features/jobs/jobsSlice';
 
 
 const JobCard: React.FC<IJobShort> = ({ _id, company, Position, jobDescription, dateApplied, response }) => {
   const navigate = useNavigate();
-  const linkWithId = `/viewjob/${_id}`
+  const dispatch: AppDispatch = useDispatch();
+
+  const linkWithId = `/viewjob/${_id}`;
+  const baseurl = `https://the-job-finder-back-end.onrender.com/api/v1/jobs`;
+
+  const deletJob = async() => {
+    console.log("deleting job");
+    dispatch(setLoading(true)) ;
+    await axios.delete(`${baseurl}/${_id}`);
+    dispatch(setLoading(false)) ;
+  }
+
   return (
     <Container className={classes.cardContainer}>
       <Row>
@@ -56,9 +71,17 @@ const JobCard: React.FC<IJobShort> = ({ _id, company, Position, jobDescription, 
           </Col>
         </Row>      
         <Row>
-          <Col>
-            <CommonButton variant="secondary" onClick={() => navigate(linkWithId)}>
-                {"View Job"}
+          <Col xs={12} md={10} className='pt-2'>
+            <div>
+              <CommonButton variant="secondary" onClick={() => navigate(linkWithId)}>
+                  {"View Job"}
+              </CommonButton>
+            </div>
+          </Col >
+            
+          <Col xs={12} md={2} className='pt-2'>
+            <CommonButton variant="secondary" onClick={deletJob}>
+                {"Remove Job"}
             </CommonButton>
           </Col>
         </Row>            
