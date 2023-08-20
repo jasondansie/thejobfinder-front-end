@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router';
 import { IJob } from '../types';
-import { Container, Form, Button } from 'react-bootstrap';
+import { Container, Form, Button, Col, Row } from 'react-bootstrap';
 import { setIsLoggedIn } from '../features/users/userSlice';
 import checkLoginService from '../services/checkLogin';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../app/store';
+import CommonButton from './CommonButton';
 
 const EditJob: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -69,7 +70,16 @@ const EditJob: React.FC = () => {
 
   return (
     <Container>
-      <h1>Edit Job</h1>
+      <Row>
+        <Col xs={6} md={3} className='pt-2'>
+        <h1>Edit Job</h1>
+        </Col>
+        <Col xs={6} md={2} className="text-md">
+              <CommonButton variant="primary" onClick={() => navigate(`/joblist`)}>
+                Back to list
+              </CommonButton>
+        </Col>
+      </Row>  
       <Form onSubmit={handleFormSubmit}>
         <div>
             <Form.Group controlId="company">

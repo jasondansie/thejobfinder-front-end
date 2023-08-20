@@ -79,7 +79,7 @@ const JobCard: React.FC<IJobShort> = ({ _id, company, Position, jobDescription, 
             </div>
           </Col >
             
-          <Col xs={12} md={2} className='pt-2'>
+          <Col xs={12} md={2} className='ml-3 pt-2'>
             <CommonButton variant="secondary" onClick={deletJob}>
                 {"Remove Job"}
             </CommonButton>

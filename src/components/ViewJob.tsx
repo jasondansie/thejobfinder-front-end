@@ -62,6 +62,11 @@ const ViewJob: React.FC = () => {
             <h1>{jobListing.company}</h1>
           </Col>
           <Col xs={6} md={2} className="text-md-end">
+            <CommonButton variant="primary" onClick={() => navigate(`/joblist`)}>
+              Back to list
+            </CommonButton>
+          </Col>
+          <Col xs={6} md={2} className="text-md-end">
             <CommonButton variant="primary" onClick={() => navigate(`/editjob/${jobListing._id}`)}>
               Edit Job
             </CommonButton>
