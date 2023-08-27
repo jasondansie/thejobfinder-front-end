@@ -19,6 +19,10 @@ const Jobs: React.FC = () => {
   const loading = useSelector((state: RootState) => state.jobs.isLoading);
   const appUser = useSelector((state: RootState) => state.users.appUser);
   const isLoggedIn = useSelector((state: RootState) => state.users.isLoggedIn);
+  const totalJobs = jobsList.length;
+  const rejectedJobs = jobsList.filter((job) => job.response === "Rejected");
+  const unasweredJobs = jobsList.filter((job) => job.response === "");
+  const answeredJobs = totalJobs - (unasweredJobs.length + rejectedJobs.length);
 
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -77,6 +81,22 @@ const Jobs: React.FC = () => {
               Add Job
             </CommonButton>
           </Col>
+        </Row>
+        <Row className='mb-3'>
+          <Col></Col>
+          <Col>
+            Total jobs: {totalJobs}
+          </Col>
+          <Col>
+            Rejections: {rejectedJobs.length}
+          </Col>
+          <Col>
+            Unanswered: {unasweredJobs.length}
+          </Col>
+          <Col>
+            Answered: {answeredJobs}
+          </Col>
+          <Col></Col>
         </Row>
         <Row className='mb-3'>
           <Col xs={12} md={4} className='pt-2'>

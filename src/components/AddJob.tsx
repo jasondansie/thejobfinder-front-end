@@ -74,12 +74,13 @@ const AddJob: React.FC = () => {
     } else {
       if (steps[steps.length - 1].key === activeStep.key) {   
         try {
-          console.log("jobFormData",jobFormData);
-
+          
           const formDataWithUserId: ISendJob = {
             ...jobFormData,
             userId: userId,
           };
+
+          console.log("jobFormData",jobFormData);
 
           const response = await axios.post(baseurl, formDataWithUserId);
 
