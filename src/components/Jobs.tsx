@@ -82,21 +82,20 @@ const Jobs: React.FC = () => {
             </CommonButton>
           </Col>
         </Row>
-        <Row className='mb-3'>
-          <Col></Col>
-          <Col>
+        <Row className='mb-3' justify-content-md-center>
+          <Col xs={1} md={2}></Col>
+          <Col xs={5} md={2} >
             Total jobs: {totalJobs}
           </Col>
-          <Col>
+          <Col xs={6} md={2}>
             Rejections: {rejectedJobs.length}
           </Col>
-          <Col>
+          <Col xs={6} md={2}>
             Unanswered: {unasweredJobs.length}
           </Col>
-          <Col>
+          <Col xs={6} md={3}>
             Answered: {answeredJobs}
           </Col>
-          <Col></Col>
         </Row>
         <Row className='mb-3'>
           <Col xs={12} md={4} className='pt-2'>

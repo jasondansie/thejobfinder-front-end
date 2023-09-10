@@ -33,12 +33,12 @@ const JobCard: React.FC<IJobShort> = ({ _id, company, Position, jobDescription, 
       <Card.Body>
         <Card.Title className='mb-2 ms-1'>{company}</Card.Title>
         <Row>
-          <Col xs={6} md={5} className='mb-2 ms-1'>
+          <Col xs={6} md={5} className='mb-2 '>
             <Card.Text>
               Date applied: 
             </Card.Text> 
           </Col>
-          <Col xs={5} md={5}> 
+          <Col xs={6} md={5}> 
           {dateApplied}
           </Col>
           <Col> 
@@ -71,17 +71,17 @@ const JobCard: React.FC<IJobShort> = ({ _id, company, Position, jobDescription, 
           </Col>
         </Row>      
         <Row>
-          <Col xs={12} md={10} className='pt-2'>
+          <Col xs={6} md={10} className='pt-2'>
             <div>
               <CommonButton variant="secondary" onClick={() => navigate(linkWithId)}>
-                  {"View Job"}
+                  {"View"}
               </CommonButton>
             </div>
           </Col >
             
-          <Col xs={12} md={2} className='ml-3 pt-2'>
+          <Col xs={6} md={2} className='ml-3 pt-2'>
             <CommonButton variant="secondary" onClick={deletJob}>
-                {"Remove Job"}
+                {"Remove"}
             </CommonButton>
           </Col>
         </Row>            
