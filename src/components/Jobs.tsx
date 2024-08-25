@@ -60,7 +60,7 @@ const Jobs: React.FC = () => {
       job.Position.toLowerCase().includes(searchQuery.toLowerCase()) ||
       job.jobDescription.toLowerCase().includes(searchQuery.toLowerCase());
 
-    const matchFilter = filterValue === '1' || job.response === filterValue;
+    const matchFilter = filterValue === 'none' || job.response === filterValue;
 
     return matchSearchQuery && matchFilter;
   });
@@ -115,10 +115,12 @@ const Jobs: React.FC = () => {
             <InputGroup>
               <InputGroup.Text id="inputGroup-sizing-lg">Filter by:</InputGroup.Text>
               <Form.Select aria-label="Default select example" value={filterValue} onChange={(e) => setFilterValue(e.target.value)}>
-                <option value="1">none</option>
-                <option value="Accepted">Accepted</option>
-                <option value="">No Response</option>
-                <option value="Rejected">Rejected</option>
+                  <option value="none">none</option>
+                  <option value="Internship">Internship</option>
+                  <option value="Full-Time">Full-Time</option>
+                  <option value="Part-Time">Part-Time</option>
+                  <option value="Rejected">Rejected</option>
+                  <option value="">No Response</option>
               </Form.Select>
             </InputGroup>
           </Col>

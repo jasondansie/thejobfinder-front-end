@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router';
 import { IJob } from '../types';
-import { Container, Form, Button, Col, Row } from 'react-bootstrap';
+import { Container, Form, Button, Col, Row, InputGroup } from 'react-bootstrap';
 import { setIsLoggedIn } from '../features/users/userSlice';
 import checkLoginService from '../services/checkLogin';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,6 +16,9 @@ const EditJob: React.FC = () => {
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state: RootState) => state.users.isLoggedIn);
   const dispatch: AppDispatch = useDispatch();
+
+  const [filterValue, setFilterValue] = useState('none');
+
 
   useEffect(() => {
     if (!setIsLoggedIn) {
@@ -58,6 +61,16 @@ const EditJob: React.FC = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    setJobListing((prevJobListing: IJob | null) => ({
+      ...(prevJobListing as IJob),
+      [name]: value
+    }));
+  };
+
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    console.log(`e.target.value: ${value} and e.target.name: ${name}`);
+    setFilterValue(value)
     setJobListing((prevJobListing: IJob | null) => ({
       ...(prevJobListing as IJob),
       [name]: value
@@ -144,7 +157,7 @@ const EditJob: React.FC = () => {
                 value={jobListing.dateApplied}
                 onChange={handleInputChange}
             />
-            </Form.Group>
+            {/* </Form.Group>
             <Form.Group controlId="response">
             <Form.Label>Response</Form.Label>
             <Form.Control
@@ -152,7 +165,22 @@ const EditJob: React.FC = () => {
                 name="response"
                 value={jobListing.response}
                 onChange={handleInputChange}
-            />
+            /> */}
+
+            <Form.Group controlId="response">
+            <Form.Label>Response</Form.Label>
+              <InputGroup>        
+                <Form.Select aria-label="Default select example" value={jobListing.response} name='response'  onChange={(e) => handleSelectChange(e)}>
+                  <option value="none">none</option>
+                  <option value="Internship">Internship</option>
+                  <option value="Full-Time">Full-Time</option>
+                  <option value="Part-Time">Part-Time</option>
+                  <option value="Rejected">Rejected</option>
+                  <option value="">No Response</option>
+                </Form.Select>
+              </InputGroup>
+            </Form.Group>
+            
             </Form.Group>
             <Form.Group controlId="reasonToWork">
             <Form.Label>Reason To Work at This Company</Form.Label>

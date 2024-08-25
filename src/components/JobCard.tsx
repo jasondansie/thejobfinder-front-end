@@ -32,7 +32,7 @@ const JobCard: React.FC<IJobShort> = ({ _id, company, Position, jobDescription, 
       <Card.Header>{Position}</Card.Header>
       <Card.Body>
         <Card.Title className='mb-2 ms-1'>{company}</Card.Title>
-        <Row>
+        <Row justify-content-center>
           <Col xs={6} md={5} className='mb-2 '>
             <Card.Text>
               Date applied: 
@@ -41,8 +41,7 @@ const JobCard: React.FC<IJobShort> = ({ _id, company, Position, jobDescription, 
           <Col xs={6} md={5}> 
           {dateApplied}
           </Col>
-          <Col> 
-          </Col>
+         
         </Row>
         <Row>
           <Col xs={6} className='mb-3 ms-1' md={5}>
@@ -71,7 +70,7 @@ const JobCard: React.FC<IJobShort> = ({ _id, company, Position, jobDescription, 
           </Col>
         </Row>      
         <Row>
-          <Col xs={6} md={10} className='pt-2'>
+          <Col xs={6} md={6} className='pt-2'>
             <div>
               <CommonButton variant="secondary" onClick={() => navigate(linkWithId)}>
                   {"View"}
@@ -79,7 +78,7 @@ const JobCard: React.FC<IJobShort> = ({ _id, company, Position, jobDescription, 
             </div>
           </Col >
             
-          <Col xs={6} md={2} className='ml-3 pt-2'>
+          <Col xs={6} md={6} className='ml-3 pt-2'>
             <CommonButton variant="secondary" onClick={deletJob}>
                 {"Remove"}
             </CommonButton>
