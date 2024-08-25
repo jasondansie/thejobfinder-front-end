@@ -17,9 +17,6 @@ const EditJob: React.FC = () => {
   const isLoggedIn = useSelector((state: RootState) => state.users.isLoggedIn);
   const dispatch: AppDispatch = useDispatch();
 
-  const [filterValue, setFilterValue] = useState('none');
-
-
   useEffect(() => {
     if (!setIsLoggedIn) {
         console.log("isLoggedIn", isLoggedIn);
@@ -69,8 +66,6 @@ const EditJob: React.FC = () => {
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
-    console.log(`e.target.value: ${value} and e.target.name: ${name}`);
-    setFilterValue(value)
     setJobListing((prevJobListing: IJob | null) => ({
       ...(prevJobListing as IJob),
       [name]: value
@@ -157,16 +152,7 @@ const EditJob: React.FC = () => {
                 value={jobListing.dateApplied}
                 onChange={handleInputChange}
             />
-            {/* </Form.Group>
-            <Form.Group controlId="response">
-            <Form.Label>Response</Form.Label>
-            <Form.Control
-                type="text"
-                name="response"
-                value={jobListing.response}
-                onChange={handleInputChange}
-            /> */}
-
+           
             <Form.Group controlId="response">
             <Form.Label>Response</Form.Label>
               <InputGroup>        
@@ -176,7 +162,7 @@ const EditJob: React.FC = () => {
                   <option value="Full-Time">Full-Time</option>
                   <option value="Part-Time">Part-Time</option>
                   <option value="Rejected">Rejected</option>
-                  <option value="">No Response</option>
+                  <option value="No Response">No Response</option>
                 </Form.Select>
               </InputGroup>
             </Form.Group>
