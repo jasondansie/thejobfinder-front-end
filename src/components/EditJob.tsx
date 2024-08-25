@@ -157,7 +157,7 @@ const EditJob: React.FC = () => {
             <Form.Label>Response</Form.Label>
               <InputGroup>        
                 <Form.Select aria-label="Default select example" value={jobListing.response} name='response'  onChange={(e) => handleSelectChange(e)}>
-                  <option value="none">none</option>
+                  <option value="None">None</option>
                   <option value="Internship">Internship</option>
                   <option value="Full-Time">Full-Time</option>
                   <option value="Part-Time">Part-Time</option>

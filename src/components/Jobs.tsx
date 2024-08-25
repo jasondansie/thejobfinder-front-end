@@ -21,8 +21,14 @@ const Jobs: React.FC = () => {
   const isLoggedIn = useSelector((state: RootState) => state.users.isLoggedIn);
   const totalJobs = jobsList.length;
   const rejectedJobs = jobsList.filter((job) => job.response === "Rejected");
-  const unasweredJobs = jobsList.filter((job) => job.response === "");
-  const answeredJobs = totalJobs - (unasweredJobs.length + rejectedJobs.length);
+  const fullTimeJobs = jobsList.filter((job) => job.response === "Full-Time");
+  const partTimeJobs = jobsList.filter((job) => job.response === "Part-Time");
+  const internshipJobs = jobsList.filter((job) => job.response === "Internship");
+  const noResponseJobs = jobsList.filter((job) => job.response === "No Response");
+  const noneJobs = jobsList.filter((job) => job.response === "None");
+  const blankJobs = jobsList.filter((job) => job.response === "");
+  const unasweredJobs = noneJobs.length + blankJobs.length + noResponseJobs.length;
+  const answeredJobs = (fullTimeJobs.length + partTimeJobs.length + internshipJobs.length);
 
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -91,7 +97,7 @@ const Jobs: React.FC = () => {
             Rejections: {rejectedJobs.length}
           </Col>
           <Col xs={6} md={2}>
-            Unanswered: {unasweredJobs.length}
+            Unanswered: {unasweredJobs}
           </Col>
           <Col xs={6} md={3}>
             Answered: {answeredJobs}
@@ -116,7 +122,7 @@ const Jobs: React.FC = () => {
               <InputGroup.Text id="inputGroup-sizing-lg">Filter by:</InputGroup.Text>
               <Form.Select aria-label="Default select example" value={filterValue} onChange={(e) => setFilterValue(e.target.value)}>
                   <option value="All">All</option>
-                  <option value="none">none</option>
+                  <option value="None">None</option>
                   <option value="Internship">Internship</option>
                   <option value="Full-Time">Full-Time</option>
                   <option value="Part-Time">Part-Time</option>
