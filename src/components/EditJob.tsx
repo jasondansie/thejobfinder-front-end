@@ -48,7 +48,6 @@ const EditJob: React.FC = () => {
     e.preventDefault();
 
     try {
-        console.log("sending edit");
       await axios.post(baseurl, jobListing);
       navigate(`/viewjob/${id}`);
     } catch (error) {

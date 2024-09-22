@@ -33,10 +33,6 @@ const CompanyInfoForm: React.FC<FormInfoProps> = ({ userId }) => {
   return (
     <Form>
       <div>
-        <Form.Group controlId="userid">
-          <Form.Label>user id</Form.Label>
-          <span>{userId}</span>
-        </Form.Group>
         <Form.Group controlId="company">
           <Form.Label>Company</Form.Label>
           <Form.Control

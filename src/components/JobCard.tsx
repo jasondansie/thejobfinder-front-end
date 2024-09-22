@@ -89,7 +89,6 @@ const JobCard: React.FC<IJobShort> = ({ _id, company, Position, jobDescription, 
       </Row>
     </Container>
     
-    
   );
 };
 
