@@ -59,7 +59,7 @@ const ViewJob: React.FC = () => {
     <Container className={classes.jobs}>
       <div>
       <Row>
-          <Col xs={6} md={3} className='pt-2'>
+          <Col xs={6} md={8} className='pt-2'>
             <h1>{jobListing.company}</h1>
           </Col>
           <Col xs={6} md={2} className="text-md-end">
@@ -114,7 +114,7 @@ const ViewJob: React.FC = () => {
             </div>
           </Col>
         </Row>
-        <Row className='mt-5'>
+        <Row className='mt-5 mb-5'>
           <Col xs={1} md={12}>
             <div className="card">
               <div className="card-header">
